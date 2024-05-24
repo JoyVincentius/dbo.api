@@ -36,3 +36,6 @@ go run main.go
 ## JSON Collection
 
 Import json collection to postman that located in json_collection folder
+
+## ERD
+ERD for this project is within the file erd.txt
