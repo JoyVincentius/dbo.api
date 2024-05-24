@@ -1,0 +1,12 @@
+     +------------+       +-------------+       +-------------+
+     |   users    |       |   customers |       |   orders    |
+     +------------+       +-------------+       +-------------+
+     | id         |       | id          |1      | id          |
+     | username   |       | customer_id |<------| customer_id |
+     | password   |       | name        |       | item        |
+     | created_at |       | email       |       | quantity    |
+     | updated_at |       +-------------+       | created_at  |
+     +------------+                             | updated_at  |
+                                                +-------------+
+
+Tabel orders memiliki relasi many-to-one (banyak ke satu) dengan tabel customers, ditandai oleh kunci asing customer_id.

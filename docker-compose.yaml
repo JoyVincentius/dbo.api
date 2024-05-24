@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  web:
+    build : .
+    image : dbo/dbo.api:latest
+    container_name: dbo.api
+    ports:
+      - 9090:9090
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./config.json:/app/config.json
+
+  mysql:
+    image: mysql:5.7
+    container_name: dbo.sql
+    command: mysqld --user=root
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=dbo
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - db_data:/var/lib/mysql
+      # Load database schema from ./init.sql
+      # If you want to reload new database schema, you need to execute
+      # `docker-compose down --volumes` first to remove the volume.
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db_data:
